@@ -1,0 +1,8 @@
+.idea
+.gradle
+.kotlin
+.settings
+.project
+.kls
+kls_database.db
+build
