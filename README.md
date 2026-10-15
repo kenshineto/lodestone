@@ -1,6 +1,6 @@
 # Lodestone
 
-A simple gradle plugin to configure my gradle projects
+A simple gradle plugin to configure my kotlin gradle projects.
 
 ## Usage
 
@@ -63,3 +63,13 @@ lodestone {
 
 }
 ```
+
+## Directories
+
+This plugin changes the default source directories.
+
+| folder | name |
+| ------ | ---- |
+| Source code | src |
+| Resources | res |
+| Tests | test |
