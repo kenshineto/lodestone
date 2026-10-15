@@ -51,5 +51,15 @@ lodestone {
     // add code coverate support with kover, only needed in the rootProject
     // use task `gradle coverage`
     kover()
+
+    // publish to maven centeral
+    publish {
+        group = "cat.freya"
+        artifact = "example"
+        author = "KenshinEto"
+        url = "https://github.com/kenshineto/example"
+        license = License.GPL3 // GPL2, GPL3, AGPL3, MIT
+    }
+
 }
 ```
