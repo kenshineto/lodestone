@@ -74,6 +74,8 @@ internal fun Project.configureMavenPublish(args: PublishArguments) {
     }
 
     extensions.configure<SigningExtension> {
-        useGpgCmd()
+        if (args.sign) {
+            useGpgCmd()
+        }
     }
 }

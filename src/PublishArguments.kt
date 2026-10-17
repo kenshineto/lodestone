@@ -9,7 +9,7 @@ class PublishArguments {
     var url = ""
     // repo
     var repo = "https://maven.freya.cat"
-    var sign = true
+    var sign = false
     // authentication
     var username = ""
     var password = ""
