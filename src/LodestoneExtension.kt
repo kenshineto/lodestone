@@ -92,8 +92,8 @@ abstract class LodestoneExtension @Inject constructor(private val project: Proje
     /**
      * Include spotless formatting into the gradle project
      */
-    fun spotless() {
-        project.configureSpotless()
+    fun spotless(ktfmtVersion: String = Versions.KTFMT) {
+        project.configureSpotless(ktfmtVersion)
     }
 
     /**

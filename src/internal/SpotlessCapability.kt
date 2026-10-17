@@ -5,12 +5,12 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 
-internal fun Project.configureSpotless() {
+internal fun Project.configureSpotless(ktfmtVersion: String) {
     pluginManager.apply("com.diffplug.spotless")
 
     project.extensions.configure<SpotlessExtension> {
         kotlin {
-            ktfmt(Versions.KTFMT).kotlinlangStyle().configure {
+            ktfmt(ktfmtVersion).kotlinlangStyle().configure {
                 it.setMaxWidth(120)
                 it.setBlockIndent(4)
                 it.setContinuationIndent(4)
@@ -18,7 +18,7 @@ internal fun Project.configureSpotless() {
             }
         }
         kotlinGradle {
-            ktfmt(Versions.KTFMT).kotlinlangStyle().configure {
+            ktfmt(ktfmtVersion).kotlinlangStyle().configure {
                 it.setMaxWidth(120)
                 it.setBlockIndent(4)
                 it.setContinuationIndent(4)
