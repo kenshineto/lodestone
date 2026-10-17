@@ -8,7 +8,7 @@ internal object Versions {
     const val KOTLIN = "2.4.+"
     const val KOTLINX_COROUTINES = "1.+"
     const val KOTLINX_KOVER = "0.9.+"
-    const val KTFMT = "0.64"
+    const val KTFMT = "0.65"
     const val MOCKITO = "5.+"
 }
 
