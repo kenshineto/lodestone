@@ -1,7 +1,5 @@
 package cat.freya.lodestone.internal
 
-import org.gradle.api.Project
-
 internal object Versions {
     const val JAVA = 25
     const val JUNIT = "6.+"

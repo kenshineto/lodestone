@@ -1,20 +1,19 @@
 package cat.freya.lodestone
 
 import cat.freya.lodestone.internal.*
-import org.gradle.api.provider.MapProperty
-import org.gradle.api.provider.ListProperty
-import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
 import javax.inject.Inject
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.support.getBooleanKotlinDslOption
+import org.gradle.api.provider.MapProperty
+import org.gradle.api.provider.Property
 
 abstract class LodestoneExtension @Inject constructor(private val project: Project) {
     abstract val buildInfoValues: MapProperty<String, Any>
+    abstract val applyKotlin: Property<Boolean>
     private val shadowArguments = ShadowArguments()
 
     init {
         buildInfoValues.convention(emptyMap())
+        applyKotlin.convention(true)
     }
 
     /**
@@ -26,28 +25,23 @@ abstract class LodestoneExtension @Inject constructor(private val project: Proje
     fun jvm(srcVersion: Int = Versions.JAVA, testVersion: Int = Versions.JAVA) {
         with(project) {
             configureJava(srcVersion)
-            configureKotlin(srcVersion)
-            configureTests(testVersion)
+            configureKotlin(srcVersion, applyKotlin.get())
+            if (applyKotlin.get()) configureTests(testVersion)
             configureTasks()
         }
     }
 
-    /**
-     * Set build info information
-     */
+    /** Set build info information */
     fun buildInfo(fn: MutableMap<String, Any>.() -> Unit) {
-        val map = mutableMapOf<String,Any>()
+        val map = mutableMapOf<String, Any>()
         fn(map)
         buildInfoValues.convention(map)
     }
 
-    /**
-     * Generate a BuildInfo.kt in the root projects group
-     */
+    /** Generate a BuildInfo.kt in the root projects group */
     fun generateBuildInfo() {
         project.configureBuildInfo(buildInfoValues.get())
     }
-
 
     /**
      * Process given resources in the 'res' directory
@@ -80,23 +74,17 @@ abstract class LodestoneExtension @Inject constructor(private val project: Proje
         }
     }
 
-    /**
-     * Include detekt linting into the gradle project
-     */
+    /** Include detekt linting into the gradle project */
     fun detekt() {
         project.configureDetekt()
     }
 
-    /**
-     * Include spotless formatting into the gradle project
-     */
+    /** Include spotless formatting into the gradle project */
     fun spotless(ktfmtVersion: String = Versions.KTFMT) {
         project.configureSpotless(ktfmtVersion)
     }
 
-    /**
-     * Include kover code coverage into the gradle project
-     */
+    /** Include kover code coverage into the gradle project */
     fun kover() {
         project.configureKover()
     }

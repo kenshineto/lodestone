@@ -1,15 +1,14 @@
 package cat.freya.lodestone.internal
 
-import org.gradle.jvm.toolchain.JavaToolchainService
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.api.attributes.java.TargetJvmVersion
 import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.gradle.api.attributes.java.TargetJvmVersion
+import org.gradle.jvm.toolchain.JavaToolchainService
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.named
 
 internal fun Project.configureTests(javaVersion: Int) {
     val mockitoAgent = configurations.create("mockitoAgent")
@@ -18,9 +17,11 @@ internal fun Project.configureTests(javaVersion: Int) {
     tasks.named<Test>("test").configure {
         useJUnitPlatform()
         jvmArgs.add("-javaagent:${mockitoAgent.asPath}")
-        javaLauncher.set(toolchainService.launcherFor {
-            languageVersion.set(JavaLanguageVersion.of(javaVersion))
-        })
+        javaLauncher.set(
+            toolchainService.launcherFor {
+                languageVersion.set(JavaLanguageVersion.of(javaVersion))
+            },
+        )
     }
 
     // tests always need to use the latest jvm version so that junit can function
@@ -42,4 +43,3 @@ internal fun Project.configureTests(javaVersion: Int) {
         mockitoAgent(Dependencies.mockitoCore)
     }
 }
-

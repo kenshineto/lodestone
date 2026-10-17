@@ -1,4 +1,3 @@
-
 package cat.freya.lodestone.internal
 
 import org.gradle.api.Project

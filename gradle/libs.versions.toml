@@ -6,6 +6,7 @@ kotlinx-coroutines = "1.11.0"
 # gradle
 detekt = "2.0.0-alpha.6"
 kover = "0.9.11"
+lodestone = "0.1-SNAPSHOT"
 shadow = "9.6.1"
 spotless = "8.10.4"
 vanniktech-publish = "0.37.0"
@@ -19,4 +20,5 @@ spotless-gradle-plugin = { module = "com.diffplug.spotless:spotless-plugin-gradl
 vanniktech-gradle-plugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "vanniktech-publish" }
 
 [plugins]
+lodestone = { id = "cat.freya.lodestone-minimal", version.ref = "lodestone" }
 vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }

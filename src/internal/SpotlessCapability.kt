@@ -3,13 +3,17 @@ package cat.freya.lodestone.internal
 import com.diffplug.gradle.spotless.SpotlessExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
 
 internal fun Project.configureSpotless(ktfmtVersion: String) {
     pluginManager.apply("com.diffplug.spotless")
 
     project.extensions.configure<SpotlessExtension> {
         kotlin {
+            targetExclude(
+                fileTree(layout.buildDirectory) {
+                    include("**/*")
+                },
+            )
             ktfmt(ktfmtVersion).kotlinlangStyle().configure {
                 it.setMaxWidth(120)
                 it.setBlockIndent(4)

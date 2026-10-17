@@ -5,11 +5,13 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
-internal fun Project.configureKotlin(javaVersion: Int) {
-    dependencies {
-        "compileOnly"(Dependencies.kotlinStdlib)
-        "compileOnly"(Dependencies.kotlinReflect)
-        "compileOnly"(Dependencies.kotlinxCoroutines)
+internal fun Project.configureKotlin(javaVersion: Int, applyKotlin: Boolean) {
+    if (applyKotlin) {
+        dependencies {
+            "compileOnly"(Dependencies.kotlinStdlib)
+            "compileOnly"(Dependencies.kotlinReflect)
+            "compileOnly"(Dependencies.kotlinxCoroutines)
+        }
     }
 
     extensions.configure<KotlinJvmProjectExtension> {

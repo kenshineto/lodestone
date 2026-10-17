@@ -1,10 +1,17 @@
 package cat.freya.lodestone
 
 class PublishArguments {
-	var group = ""
-	var author = ""
-    var license = License.MIT
-	var artifact = ""
+    // pom metadata
+    var group = ""
+    var author = ""
+    var license = License.GPL3
+    var artifact = ""
     var url = ""
-	val repo = "maven.in.freya.cat:/nfs/maven/"
+    // repo
+    var repo = "https://maven.freya.cat"
+    var sign = true
+    // authentication
+    var username = ""
+    var password = ""
+    var auth = "basic"
 }
