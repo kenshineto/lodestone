@@ -8,6 +8,7 @@ import java.io.InputStream
 class LodestonePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.extensions.create("lodestone", LodestoneExtension::class.java)
+        project.pluginManager.apply("org.jetbrains.kotlin.jvm")
         project.initalizeShadow()
     }
 
