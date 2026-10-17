@@ -8,7 +8,7 @@ plugins {
 
 group = "cat.freya.lodestone"
 
-version = "0.1-SNAPSHOT"
+version = "0.2-SNAPSHOT"
 
 description = "Gradle plugin for KenshinEto's projects"
 
