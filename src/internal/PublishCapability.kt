@@ -9,49 +9,71 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.signing.SigningExtension
 import cat.freya.lodestone.PublishArguments
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
+import org.gradle.api.tasks.Exec
 
-internal fun Project.configureMavenPublish(pom: PublishArguments) {
+internal fun Project.configureMavenPublish(args: PublishArguments) {
 	pluginManager.apply("com.vanniktech.maven.publish")
 	pluginManager.apply("signing")
+
+	val stagingRepo = layout.buildDirectory.dir("repo")
 
 	extensions.configure<PublishingExtension> {
 		publications.withType<MavenPublication>().configureEach {
 			suppressAllPomMetadataWarnings()
 		}
+
+		repositories {
+			maven {
+				name = "staging"
+				url = uri(stagingRepo)
+			}
+		}
 	}
 
 	extensions.configure<MavenPublishBaseExtension> {
         coordinates(
-            groupId = pom.group,
-            artifactId = pom.artifact,
+            groupId = args.group,
+            artifactId = args.artifact,
             version = version.toString()
         )
-        publishToMavenCentral()
+
 		signAllPublications()
 
 		pom {
 			name.set(rootProject.name)
 			description.set(rootProject.description)
-			url.set(pom.url)
+			url.set(args.url)
 			licenses {
         	    license {
-        	        name.set(pom.license.title)
-        	        url.set(pom.license.url)
+        	        name.set(args.license.title)
+        	        url.set(args.license.url)
         	    }
         	}
 			developers {
         	    developer {
-        	        id.set(pom.author)
-        	        name.set(pom.author)
+        	        id.set(args.author)
+        	        name.set(args.author)
         	    }
         	}
         	scm {
-        	    url.set(pom.url)
+        	    url.set(args.url)
         	}
 		}
     }
 
 	extensions.configure<SigningExtension> {
 		useGpgCmd()
+	}
+
+	val syncTask = tasks.register("syncMavenRepository", Exec::class.java) {
+		commandLine("rsync", "-az", "--", stagingRepo.get().asFile.absolutePath + "/", args.repo)
+		onlyIf {
+			tasks.named("publish").get().state.failure == null
+		}
+	}
+
+	tasks.named("publish") {
+		finalizedBy(syncTask)
 	}
 }

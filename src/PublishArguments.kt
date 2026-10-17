@@ -6,4 +6,5 @@ class PublishArguments {
     var license = License.MIT
 	var artifact = ""
     var url = ""
+	val repo = "maven.in.freya.cat:/nfs/maven/"
 }

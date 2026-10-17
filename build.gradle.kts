@@ -1,5 +1,6 @@
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.tasks.Exec
 
 plugins {
     `kotlin-dsl`
@@ -8,7 +9,7 @@ plugins {
 }
 
 group = "cat.freya.lodestone"
-version = "0.1.0"
+version = "0.1-SNAPSHOT"
 description = "Gradle plugin for KenshinEto's projects"
 
 val author = "KenshinEto"
@@ -60,6 +61,18 @@ extensions.configure<PublishingExtension> {
     }
 }
 
+val stagingRepo = layout.buildDirectory.dir("repo")
+val remoteRepo = "maven.in.freya.cat:/nfs/maven"
+
+publishing {
+    repositories {
+		maven {
+			name = "staging"
+			url = uri(stagingRepo)
+		}
+	}
+}
+
 mavenPublishing {
     coordinates(
         groupId = "cat.freya",
@@ -67,7 +80,6 @@ mavenPublishing {
         version = version.toString(),
     )
 
-    publishToMavenCentral()
     signAllPublications()
 
     pom {
@@ -94,4 +106,15 @@ mavenPublishing {
 
 signing {
     useGpgCmd()
+}
+
+val syncTask = tasks.register<Exec>("syncMavenRepository") {
+commandLine("rsync", "-az", "--", stagingRepo.get().asFile.absolutePath + "/", remoteRepo)
+	onlyIf {
+		tasks.named("publish").get().state.failure == null
+	}
+}
+
+tasks.named("publish") {
+	finalizedBy(syncTask)
 }
