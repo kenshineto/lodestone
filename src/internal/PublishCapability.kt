@@ -10,6 +10,10 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.signing.SigningExtension
 
+private fun Project.getSecret(name: String, default: String): String {
+    return findProperty(name) as? String ?: System.getenv(name) ?: default
+}
+
 internal fun Project.configureMavenPublish(args: PublishArguments) {
     pluginManager.apply("com.vanniktech.maven.publish")
     pluginManager.apply("signing")
@@ -26,8 +30,8 @@ internal fun Project.configureMavenPublish(args: PublishArguments) {
 
                 url = uri("${args.repo}/$slug")
                 credentials {
-                    username = project.findProperty("mavenUsername") as? String ?: args.username
-                    password = project.findProperty("mavenPassword") as? String ?: args.password
+                    username = getSecret("mavenUsername", args.username)
+                    password = getSecret("mavenPassword", args.password)
                 }
                 authentication {
                     create(args.auth, BasicAuthentication::class.java)
