@@ -26,7 +26,6 @@ abstract class LodestoneExtension @Inject constructor(private val project: Proje
      */
     fun jvm(srcVersion: Int = Versions.JAVA, testVersion: Int = Versions.JAVA) {
         with(project) {
-            configureRepositories()
             configureJava(srcVersion)
             configureKotlin(srcVersion)
             configureTests(testVersion)
