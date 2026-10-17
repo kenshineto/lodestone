@@ -8,13 +8,17 @@ import cat.freya.lodestone.internal.Versions
 import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.kotlin.dsl.exclude
 
+private fun formatVersion(version: String): String {
+    return version.replace(".+", "").split("+")[0]
+}
+
 fun Project.getVersion(name: String): String {
     val libs = rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs")
-    return libs.findVersion(name).get().requiredVersion.replace(".+", "").split("+")[0]
+    return formatVersion(libs.findVersion(name).get().requiredVersion)
 }
 
 fun getKotlinVersion(): String {
-    return Versions.KOTLIN
+    return formatVersion(Versions.KOTLIN)
 }
 
 val excludeKotlin: ExternalModuleDependency.() -> Unit = {
