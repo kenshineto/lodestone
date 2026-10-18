@@ -2,6 +2,24 @@
 
 A simple gradle plugin to configure my kotlin gradle projects.
 
+## Setup
+
+Put the following in your `settings.gradle.kts`
+```kotlin
+pluginManagement {
+    repositories {
+        maven("https://maven.freya.cat/snapshots")
+    }
+}
+```
+
+Use one of the following plugin ids
+
+| id | description |
+| -- | ----------- |
+| cat.freya.lodestone | Default gradle configurator |
+| cat.freya.lodestone-minimal | No kotlin or shadow plugin pre applied |
+
 ## Usage
 
 ```kotlin
