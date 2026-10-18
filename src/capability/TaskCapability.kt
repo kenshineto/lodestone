@@ -5,8 +5,6 @@ import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.named
 
 internal fun Project.configureTasks() {
-    if (this != rootProject) return
-
     // dont check on builds
     tasks.named("build") {
         dependsOn.removeIf { it.toString().contains("check") }
@@ -18,6 +16,8 @@ internal fun Project.configureTasks() {
         // disable jar, no source code
         tasks.named<Jar>("jar") { enabled = false }
     }
+
+    if (this != rootProject) return
 
     // link up lint and format tasks
     val lint = tasks.findByName("lint") ?: tasks.register("lint").get()

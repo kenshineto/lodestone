@@ -32,7 +32,6 @@ abstract class LodestoneExtension @Inject constructor(private val project: Proje
 
     init {
         buildInfoValues.convention(emptyMap())
-        project.configureTasks()
         project.initalizeShadow()
     }
 
@@ -49,6 +48,7 @@ abstract class LodestoneExtension @Inject constructor(private val project: Proje
         hasJava = true
         this.jvmVersion = jvmVersion
         project.configureJava(jvmVersion)
+        project.configureTasks()
     }
 
     /**
