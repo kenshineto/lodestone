@@ -1,4 +1,4 @@
-import cat.freya.lodestone.License
+import cat.freya.lodestone.publishing.License
 
 plugins {
     `kotlin-dsl`
@@ -8,7 +8,7 @@ plugins {
 
 group = "cat.freya.lodestone"
 
-version = "0.2-SNAPSHOT"
+version = "0.3-SNAPSHOT"
 
 description = "Gradle plugin for KenshinEto's projects"
 
@@ -20,44 +20,37 @@ repositories {
 }
 
 lodestone {
-    jvm()
+    kotlin(embeddedKotlinVersion)
     detekt()
     spotless()
     publish {
-        group = "cat.freya"
         artifact = "lodestone-gradle-plugin"
+        group = "cat.freya"
         author = "KenshinEto"
-        url = scm
         license = License.GPL3
+        gitRepo = scm
+        reposilite("https://maven.freya.cat")
     }
 }
 
 dependencies {
     implementation(libs.detekt.gradle.plugin)
-    implementation(libs.kotlin.gradle.plugin)
     implementation(libs.kover.gradle.plugin)
     implementation(libs.shadow.gradle.plugin) {
         exclude(group = "org.jetbrains.kotlin")
     }
     implementation(libs.spotless.gradle.plugin)
     implementation(libs.vanniktech.gradle.plugin)
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$embeddedKotlinVersion")
 }
 
 gradlePlugin {
     website.set(scm)
     vcsUrl.set(scm)
-
     plugins {
         create("lodestone") {
             id = rootProject.group.toString()
             implementationClass = "${rootProject.group}.LodestonePlugin"
-            displayName = rootProject.name
-            description = rootProject.description
-        }
-
-        create("lodestone-minimal") {
-            id = rootProject.group.toString() + "-minimal"
-            implementationClass = "${rootProject.group}.LodestonePluginMinimal"
             displayName = rootProject.name
             description = rootProject.description
         }

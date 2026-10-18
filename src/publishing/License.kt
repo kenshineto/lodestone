@@ -1,4 +1,4 @@
-package cat.freya.lodestone
+package cat.freya.lodestone.publishing
 
 enum class License(val title: String, val url: String) {
     MIT("MIT License", "https://opensource.org"),

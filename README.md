@@ -4,7 +4,7 @@ A simple gradle plugin to configure my kotlin gradle projects.
 
 ## Setup
 
-Put the following in your `settings.gradle.kts`
+Put the following in your `settings.gradle.kts`.
 ```kotlin
 pluginManagement {
     repositories {
@@ -13,19 +13,24 @@ pluginManagement {
 }
 ```
 
-Use one of the following plugin ids
-
-| id | description |
-| -- | ----------- |
-| cat.freya.lodestone | Default gradle configurator |
-| cat.freya.lodestone-minimal | No kotlin or shadow plugin pre applied |
+Put the following in your `build.gradle.kts`.
+```kotlin
+plugins {
+    id("cat.freya.lodestone")
+}
+```
 
 ## Usage
 
 ```kotlin
 lodestone {
-    // use jvm version 8
-    jvm(8)
+    // how to enable java
+    java()  // use latest lts jvm version
+    java(8) // use jvm 8
+
+    // enable kotlin
+    kotlin()        // use latest kotlin release
+    kotlin("2.4.0") // use a given kotlin release
 
     // store information used for processing resources
     // and generating BuildInfo.kt
@@ -58,6 +63,10 @@ lodestone {
         relocations.add("org.bstats")
     }
 
+    // add support for testing with junit
+    // tests are stored in the 'test' directory
+    junit()
+
     // add detekt to the `gradle lint` task
     // see `res/detekt.yml` for the config
     detekt()
@@ -72,11 +81,24 @@ lodestone {
 
     // publish to maven centeral
     publish {
-        group = "cat.freya"
         artifact = "example"
+        group = "cat.freya"
         author = "KenshinEto"
-        url = "https://github.com/kenshineto/example"
         license = License.GPL3 // GPL2, GPL3, AGPL3, MIT
+        gitRepo = "https://github.com/kenshineto/example"
+
+        // uses mavenCenteralUsername and mavenCentralPassword
+        mavenCentral()
+
+        // use mavenUsername and mavenPassword
+        maven("https://maven.example.com")
+        reposilite("https://maven.example.com")
+
+        // uses exampleUsername and examplePassword
+        maven {
+            name = "example"
+            url = "https://maven.example.com"
+        }
     }
 
 }

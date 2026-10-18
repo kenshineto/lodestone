@@ -1,4 +1,4 @@
-package cat.freya.lodestone.internal
+package cat.freya.lodestone.capability
 
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

@@ -1,10 +1,9 @@
-package cat.freya.lodestone.internal
+package cat.freya.lodestone.shadow
 
-import cat.freya.lodestone.ShadowArguments
+import cat.freya.lodestone.kotlin.KotlinVersions
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy
-import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.withType
 import org.gradle.language.jvm.tasks.ProcessResources
@@ -18,15 +17,11 @@ internal fun Project.initalizeShadow() {
     }
 }
 
-internal fun Project.configureShadow(args: ShadowArguments) {
+internal fun Project.configureShadow(args: ShadowArguments, kotlinVersions: KotlinVersions) {
     val shadow = configurations.named("shadow").get()
 
     if (args.includeKotlin) {
-        dependencies {
-            shadow(Dependencies.kotlinStdlib)
-            shadow(Dependencies.kotlinReflect)
-            shadow(Dependencies.kotlinxCoroutines)
-        }
+        kotlinVersions.apply(this, "shadow")
     }
 
     val project = this
@@ -41,7 +36,7 @@ internal fun Project.configureShadow(args: ShadowArguments) {
         archiveBaseName.set(jarName)
         archiveVersion.set(jarVersion)
         archiveClassifier.set(jarPlatform)
-        destinationDirectory.set(layout.buildDirectory.dir("libs"))
+        destinationDirectory.set(project.layout.buildDirectory.dir("libs"))
         if (args.includeProjectName) {
             archiveFileName.set("$jarName-$jarVersion+$jarPlatform.jar")
         } else {

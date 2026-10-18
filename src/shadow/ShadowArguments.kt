@@ -1,4 +1,4 @@
-package cat.freya.lodestone
+package cat.freya.lodestone.shadow
 
 class ShadowArguments {
     val relocations = mutableListOf<String>()

@@ -1,8 +1,7 @@
-package cat.freya.lodestone.internal
+package cat.freya.lodestone.capability
 
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.api.tasks.bundling.Jar
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.named
@@ -12,11 +11,15 @@ internal fun Project.configureJava(javaVersion: Int) {
 
     extensions.configure<JavaPluginExtension> {
         toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
-    }
 
-    val srcDir = layout.projectDirectory.dir("src").asFile
-    if (!srcDir.exists()) {
-        // disable jar, no source code
-        tasks.named<Jar>("jar") { enabled = false }
+        sourceSets {
+            named("main") {
+                java.srcDirs("src")
+                resources.srcDirs("res")
+            }
+            named("test") {
+                java.srcDirs("test")
+            }
+        }
     }
 }

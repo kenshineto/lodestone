@@ -1,24 +1,18 @@
 [versions]
-# kotlin
-kotlin = "2.4.21"
-kotlinx-coroutines = "1.11.0"
-
-# gradle
 detekt = "2.0.0-alpha.6"
 kover = "0.9.11"
-lodestone = "0.2-SNAPSHOT"
+lodestone = "0.3-SNAPSHOT"
 shadow = "9.6.1"
 spotless = "8.10.4"
 vanniktech-publish = "0.37.0"
 
 [libraries]
 detekt-gradle-plugin = { module = "dev.detekt:detekt-gradle-plugin", version.ref = "detekt" }
-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kover-gradle-plugin = { module = "org.jetbrains.kotlinx.kover:org.jetbrains.kotlinx.kover.gradle.plugin", version.ref = "kover" }
 shadow-gradle-plugin = { module = "com.gradleup.shadow:shadow-gradle-plugin", version.ref = "shadow" }
 spotless-gradle-plugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 vanniktech-gradle-plugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "vanniktech-publish" }
 
 [plugins]
-lodestone = { id = "cat.freya.lodestone-minimal", version.ref = "lodestone" }
+lodestone = { id = "cat.freya.lodestone", version.ref = "lodestone" }
 vanniktech-publish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-publish" }

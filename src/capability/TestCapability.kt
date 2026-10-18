@@ -1,5 +1,6 @@
-package cat.freya.lodestone.internal
+package cat.freya.lodestone.capability
 
+import cat.freya.lodestone.Dependencies
 import org.gradle.api.Project
 import org.gradle.api.attributes.java.TargetJvmVersion
 import org.gradle.api.tasks.testing.Test
@@ -32,14 +33,11 @@ internal fun Project.configureTests(javaVersion: Int) {
         }
 
     dependencies {
-        "testImplementation"(Dependencies.kotlinStdlib)
-        "testImplementation"(Dependencies.kotlinReflect)
-        "testImplementation"(Dependencies.kotlinxCoroutines)
-        "testImplementation"(Dependencies.junitJupiterApi)
-        "testImplementation"(Dependencies.junitJupiterParams)
-        "testRuntimeOnly"(Dependencies.junitJupiterEngine)
-        "testRuntimeOnly"(Dependencies.junitJupiterPlatformLauncher)
-        "testImplementation"(Dependencies.mockitoCore)
-        mockitoAgent(Dependencies.mockitoCore)
+        "testImplementation"(Dependencies.JUNIT_JUPITER_API)
+        "testImplementation"(Dependencies.JUNIT_JUPITER_PARAMS)
+        "testRuntimeOnly"(Dependencies.JUNIT_JUPITER_ENGINE)
+        "testRuntimeOnly"(Dependencies.JUNIT_JUPITER_PLATFORM_LAUNCHER)
+        "testImplementation"(Dependencies.MOCKITO_CORE)
+        mockitoAgent(Dependencies.MOCKITO_CORE)
     }
 }
