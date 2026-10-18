@@ -15,7 +15,6 @@ import cat.freya.lodestone.publishing.PublishArguments
 import cat.freya.lodestone.publishing.configureMavenPublish
 import cat.freya.lodestone.shadow.ShadowArguments
 import cat.freya.lodestone.shadow.configureShadow
-import cat.freya.lodestone.shadow.initalizeShadow
 import javax.inject.Inject
 import org.gradle.api.Project
 import org.gradle.api.provider.MapProperty
@@ -32,7 +31,6 @@ abstract class LodestoneExtension @Inject constructor(private val project: Proje
 
     init {
         buildInfoValues.convention(emptyMap())
-        project.initalizeShadow()
     }
 
     /**
